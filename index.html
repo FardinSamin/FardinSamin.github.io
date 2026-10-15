@@ -36,5 +36,35 @@
 
   <body>
     <div id="root"></div>
-  </body>
+  
+  <script>
+    (() => {
+      const addPembrokeScholarsPhoto = () => {
+        const section = document.getElementById("education");
+        if (!section || section.querySelector("[data-pembroke-scholars-photo]")) return;
+        const card = section.querySelector(".glass.neon-border");
+        if (!card) return;
+        const content = card.firstElementChild || card;
+        const wrap = document.createElement("div");
+        wrap.setAttribute("data-pembroke-scholars-photo", "");
+        wrap.style.cssText = "margin-top:2rem;overflow:hidden;border-radius:.75rem;border:1px solid hsl(var(--primary) / .2);background:hsl(var(--background) / .2)";
+        const img = document.createElement("img");
+        img.src = "/assets/pembroke-scholars.webp";
+        img.alt = "Fardin Samin receiving Pembroke Scholars Silver Scholar recognition at UNC Pembroke";
+        img.loading = "lazy";
+        img.style.cssText = "display:block;width:100%;height:auto;object-fit:cover";
+        wrap.appendChild(img);
+        content.appendChild(wrap);
+      };
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", addPembrokeScholarsPhoto);
+      } else {
+        addPembrokeScholarsPhoto();
+      }
+      const observer = new MutationObserver(addPembrokeScholarsPhoto);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+      setTimeout(() => observer.disconnect(), 10000);
+    })();
+  </script>
+</body>
 </html>
