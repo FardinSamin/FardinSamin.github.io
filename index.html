@@ -205,33 +205,94 @@
 
   <script data-direction-heading-fix>
     (() => {
-      const renameLegacyFeatured = () => {
+      const personalizeDirectionSection = () => {
         const projects = document.getElementById("projects");
         const headings = Array.from(document.querySelectorAll("h1,h2,h3"));
-        const legacyHeading = headings.find((el) => {
+
+        let directionHeading = headings.find((el) => {
           const text = (el.textContent || "").trim();
-          return text === "What I'm Building" && (!projects || !projects.contains(el));
+          return text === "Where I'm Headed" && (!projects || !projects.contains(el));
         });
-        if (!legacyHeading) return;
 
-        legacyHeading.textContent = "Where I'm Headed";
+        if (!directionHeading) {
+          directionHeading = headings.find((el) => {
+            const text = (el.textContent || "").trim();
+            return text === "What I'm Building" && (!projects || !projects.contains(el));
+          });
+        }
 
-        const container = legacyHeading.parentElement;
-        if (!container) return;
-        const labels = Array.from(container.querySelectorAll("p"));
-        const kicker = labels.find((el) =>
-          (el.textContent || "").trim().toLowerCase().includes("featured")
+        if (!directionHeading) return;
+
+        directionHeading.textContent = "Where I'm Headed";
+
+        const headingContainer = directionHeading.parentElement;
+        if (headingContainer) {
+          const labels = Array.from(headingContainer.querySelectorAll("p"));
+          const kicker = labels.find((el) => {
+            const text = (el.textContent || "").trim().toLowerCase();
+            return text.includes("featured") || text.includes("direction");
+          });
+          if (kicker) kicker.textContent = "// DIRECTION";
+        }
+
+        const section =
+          directionHeading.closest("section") ||
+          directionHeading.parentElement?.parentElement?.parentElement;
+
+        if (!section) return;
+
+        const allElements = Array.from(section.querySelectorAll("h2,h3,h4,p"));
+
+        const oldMainHeading = allElements.find((el) =>
+          (el.textContent || "").trim().startsWith("A builder at the intersection")
         );
-        if (kicker) kicker.textContent = "// DIRECTION";
+        if (oldMainHeading) {
+          oldMainHeading.textContent =
+            "Building across research, intelligent systems, and real-world software";
+        }
+
+        const oldMainBody = allElements.find((el) => {
+          const text = (el.textContent || "").trim();
+          return text.startsWith("I’m building a path") || text.startsWith("I'm building a path");
+        });
+        if (oldMainBody) {
+          oldMainBody.textContent =
+            "I like working on problems that sit between research and engineering—where an idea has to become something that can actually be designed, built, tested, and evaluated. My work spans cybersecurity, trustworthy AI, knowledge graphs, computer vision, and full-stack software systems. Some projects begin with a research question; others begin with a practical problem. What interests me most is understanding how the pieces fit together and building systems that are useful, explainable, and technically sound.";
+        }
+
+        const updateCard = (title, copy) => {
+          const cardHeading = allElements.find(
+            (el) => (el.textContent || "").trim() === title
+          );
+          if (!cardHeading) return;
+
+          const card = cardHeading.parentElement;
+          if (!card) return;
+
+          const body = Array.from(card.querySelectorAll("p")).find(
+            (el) => (el.textContent || "").trim().length > 0
+          );
+          if (body) body.textContent = copy;
+        };
+
+        updateCard(
+          "Current Focus",
+          "Right now, I’m balancing research with hands-on software development: ThreatRAGraph around GraphRAG and evidence-backed knowledge graphs, UniParkingBuddy across computer vision and full-stack engineering, and continued work in local AI, retrieval, secure software design, and applied machine learning. I’m also strengthening the fundamentals behind that work—software architecture, networking, data modeling, experimentation, and research methodology."
+        );
+
+        updateCard(
+          "What Sets Me Apart",
+          "I enjoy moving between different layers of a problem. I can start with a research question, think through how it should be measured, design the system behind it, and then work through the implementation details needed to make it real. I care about whether something works, but also how we know it works, what assumptions it depends on, and where it might fail."
+        );
       };
 
       if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", renameLegacyFeatured);
+        document.addEventListener("DOMContentLoaded", personalizeDirectionSection);
       } else {
-        renameLegacyFeatured();
+        personalizeDirectionSection();
       }
 
-      const observer = new MutationObserver(renameLegacyFeatured);
+      const observer = new MutationObserver(personalizeDirectionSection);
       observer.observe(document.documentElement, { childList: true, subtree: true });
       setTimeout(() => observer.disconnect(), 15000);
     })();
