@@ -32,11 +32,147 @@
 
     <script type="module" crossorigin src="/assets/index-Dgzl0BhR.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-C1oXypmT.css" />
+    <style id="research-projects-styles">
+      #projects .rp-shell{max-width:72rem;margin:0 auto}
+      #projects .rp-intro{max-width:48rem;margin-top:1.25rem;color:hsl(var(--muted-foreground));line-height:1.75}
+      #projects .rp-stack{display:grid;gap:1.5rem}
+      #projects .rp-card{padding:2rem;border-radius:.75rem;border:1px solid hsl(var(--primary)/.24);background:hsl(var(--card)/.56);backdrop-filter:blur(14px);box-shadow:0 0 28px hsl(var(--primary)/.045)}
+      #projects .rp-top{display:flex;gap:1.25rem;align-items:flex-start;justify-content:space-between}
+      #projects .rp-title-row{display:flex;gap:1rem;align-items:flex-start}
+      #projects .rp-icon{width:2.75rem;height:2.75rem;border-radius:.65rem;background:hsl(var(--primary)/.1);display:flex;align-items:center;justify-content:center;color:hsl(var(--primary));font-size:1.25rem;flex:0 0 auto}
+      #projects .rp-status{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:hsl(var(--primary));font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.45rem}
+      #projects .rp-name{font-size:1.65rem;font-weight:700;color:hsl(var(--foreground));line-height:1.2}
+      #projects .rp-summary{margin-top:1.35rem;color:hsl(var(--foreground)/.88);line-height:1.75;font-size:1.02rem}
+      #projects .rp-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.15rem}
+      #projects .rp-tag{border:1px solid hsl(var(--primary)/.22);background:hsl(var(--primary)/.055);color:hsl(var(--primary));border-radius:999px;padding:.3rem .65rem;font:500 .72rem ui-monospace,SFMono-Regular,Menlo,monospace}
+      #projects .rp-links{display:flex;gap:.6rem;flex-wrap:wrap}
+      #projects .rp-link{display:inline-flex;align-items:center;gap:.4rem;border:1px solid hsl(var(--primary)/.3);border-radius:.55rem;padding:.55rem .8rem;color:hsl(var(--primary));font-size:.82rem;font-weight:600;text-decoration:none}
+      #projects .rp-link:hover{background:hsl(var(--primary)/.1)}
+      #projects details{margin-top:1.35rem;padding-top:1.1rem;border-top:1px solid hsl(var(--border))}
+      #projects summary{cursor:pointer;color:hsl(var(--foreground));font-weight:600}
+      #projects .rp-detail{margin-top:1rem;display:grid;gap:.9rem;color:hsl(var(--muted-foreground));line-height:1.7}
+      #projects .rp-subhead{margin:3.75rem 0 1.5rem}
+      #projects .rp-subhead h3{font-size:1.85rem;font-weight:700;color:hsl(var(--foreground))}
+      #projects .rp-small-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+      #projects .rp-small{padding:1.5rem;border-radius:.75rem;background:hsl(var(--card)/.5);border:1px solid hsl(var(--border));backdrop-filter:blur(12px)}
+      #projects .rp-small:hover{border-color:hsl(var(--primary)/.28)}
+      #projects .rp-small-title{font-size:1.18rem;font-weight:700;color:hsl(var(--foreground));margin:.3rem 0 .7rem}
+      #projects .rp-small p{color:hsl(var(--muted-foreground));line-height:1.65;font-size:.94rem}
+      @media(max-width:768px){
+        #projects .rp-top{flex-direction:column}
+        #projects .rp-small-grid{grid-template-columns:1fr}
+        #projects .rp-card{padding:1.4rem}
+      }
+    </style>
   </head>
 
   <body>
     <div id="root"></div>
   
+
+  <script data-research-projects-injector>
+    (() => {
+      const sectionMarkup = `
+        <div class="rp-shell">
+          <div class="mb-16">
+            <p class="font-mono text-primary text-sm tracking-[0.2em] uppercase mb-3">// research & projects</p>
+            <h2 class="font-display text-4xl md:text-5xl font-bold gradient-text inline-block">What I'm Building</h2>
+            <p class="rp-intro">Research and engineering work across cybersecurity, trustworthy AI, knowledge graphs, computer vision, and full-stack software systems.</p>
+          </div>
+
+          <div class="rp-stack">
+            <article class="rp-card">
+              <div class="rp-top">
+                <div class="rp-title-row">
+                  <div class="rp-icon">⌘</div>
+                  <div><div class="rp-status">PURC/URFS Research · Ongoing</div><h3 class="rp-name">ThreatRAGraph</h3></div>
+                </div>
+                <div class="rp-links">
+                  <a class="rp-link" href="https://github.com/FardinSamin/ThreatRAGraph" target="_blank" rel="noreferrer">GitHub ↗</a>
+                  <a class="rp-link" href="https://bravemailuncp-my.sharepoint.com/:w:/g/personal/fes006_bravemail_uncp_edu/IQCm7_P8xHQUS771Cvm0bU4iAR1KcH38iBG8epTPPhgONcc?e=n2FFPs" target="_blank" rel="noreferrer" title="UNCP access may be required">PURC/URFS Proposal ↗</a>
+                </div>
+              </div>
+              <p class="rp-summary">A GraphRAG-based cyber threat intelligence research system investigating whether graph-structural similarity to historically documented threats can help produce useful provisional profiles when an emerging threat has only one or two early public reports.</p>
+              <div class="rp-tags"><span class="rp-tag">Python</span><span class="rp-tag">GraphRAG</span><span class="rp-tag">Knowledge Graphs</span><span class="rp-tag">SQLite</span><span class="rp-tag">Cyber Threat Intelligence</span><span class="rp-tag">Provenance</span><span class="rp-tag">Graph Similarity</span><span class="rp-tag">Kubernetes Security</span></div>
+              <details><summary>Explore the technical and research details</summary><div class="rp-detail">
+                <p>The local Python research pipeline preserves source provenance, extracts security-relevant entities and relationships, and represents sourced claims in an evidence-backed graph rather than treating model-generated relationships as automatically true.</p>
+                <p>The planned paired evaluation compares <strong>B0</strong>, a profile built only from the earliest reports, with <strong>G1</strong>, a graph-assisted profile that also uses historically eligible structural similarities. Later reporting is held out and used to assess whether the graph-assisted profile surfaced useful characteristics earlier.</p>
+                <p>My work includes research design, architecture, provenance and evidence modeling, graph schema design, historical cutoff handling, baseline construction, similarity-analysis infrastructure, source-integrity controls, and evaluation planning. The real-data GraphRAG effectiveness study is still in progress, so the project does not claim completed empirical effectiveness.</p>
+              </div></details>
+            </article>
+
+            <article class="rp-card">
+              <div class="rp-top"><div class="rp-title-row"><div class="rp-icon">⚠</div><div><div class="rp-status">Faculty-Guided Security Research · Ongoing</div><h3 class="rp-name">CTI & LLM Poisoning Research</h3></div></div></div>
+              <p class="rp-summary">Research on how poisoned cyber threat intelligence can introduce false relationships into knowledge graphs and then influence retrieval- or LLM-generated security analysis downstream.</p>
+              <div class="rp-tags"><span class="rp-tag">LLM Security</span><span class="rp-tag">CTI</span><span class="rp-tag">Knowledge Graph Poisoning</span><span class="rp-tag">Graph Precision / Recall</span><span class="rp-tag">Evidence Verification</span><span class="rp-tag">Contradiction Detection</span><span class="rp-tag">Trustworthy AI</span></div>
+              <details><summary>Explore the technical and research details</summary><div class="rp-detail">
+                <p>The threat model follows the path from source material to extracted graph relationships and finally to AI-assisted answers. A poisoned assertion such as a false <strong>Threat Actor → USES → Malware</strong> edge can become retrievable context and affect later analysis even when the generated answer sounds plausible.</p>
+                <p>My contributions include designing controlled clean and poisoned evaluation conditions, assessing extracted graph relationships with precision and recall, and studying how unsupported or contradictory relationships propagate through the system.</p>
+                <p>Defenses under evaluation include evidence verification, contradiction detection, and confidence-weighted relationships so that weakly supported claims exert less influence than independently corroborated evidence.</p>
+              </div></details>
+            </article>
+
+            <article class="rp-card">
+              <div class="rp-top">
+                <div class="rp-title-row"><div class="rp-icon">P</div><div><div class="rp-status">CSC 4900 Advanced Software Project · Prototype</div><h3 class="rp-name">UniParkingBuddy</h3></div></div>
+                <div class="rp-links"><a class="rp-link" href="https://github.com/FardinSamin/UniParkingBuddy" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+              </div>
+              <p class="rp-summary">A computer-vision campus parking prototype that classifies manually configured parking spaces as AVAILABLE or OCCUPIED from authorized prerecorded footage or an approved portable camera setup.</p>
+              <div class="rp-tags"><span class="rp-tag">Python</span><span class="rp-tag">YOLO</span><span class="rp-tag">OpenCV</span><span class="rp-tag">FastAPI</span><span class="rp-tag">PostgreSQL</span><span class="rp-tag">React</span><span class="rp-tag">TypeScript</span><span class="rp-tag">Computer Vision</span></div>
+              <details><summary>Explore the technical and engineering details</summary><div class="rp-detail">
+                <p>YOLO and OpenCV process parking footage and associate detected vehicles with configured parking-space polygons. FastAPI exposes the current monitored-lot state to a read-only React + TypeScript interface, while PostgreSQL can store anonymous timestamped observations for descriptive history.</p>
+                <p>The baseline deliberately avoids identity tracking: it does not identify people, license plates, or specific vehicles, and it does not reserve spaces, process payments, or enforce parking rules. Replayed demonstration video is not presented as current campus traffic.</p>
+                <p>My work includes architecture, requirements and design documentation, backend/database integration, computer-vision workflow development, parking-space calibration, API contracts, testing, validation planning, and integration. Separate experimental work explores camera-adaptive stall discovery without silently replacing the manually configured baseline.</p>
+              </div></details>
+            </article>
+          </div>
+
+          <div class="rp-subhead"><p class="font-mono text-primary text-sm tracking-[0.2em] uppercase mb-2">// selected projects</p><h3>Additional Builds</h3></div>
+          <div class="rp-small-grid">
+            <article class="rp-small"><div class="rp-status">Local AI · Application Security</div><h4 class="rp-small-title">Secure Local AI Assistant</h4><p>A locally hosted AI assistant using React/TypeScript, Node.js/Express, and Ollama. The project emphasizes keeping model interaction local where possible while incorporating authentication and application-level safeguards around the assistant and backend.</p><div class="rp-tags"><span class="rp-tag">React</span><span class="rp-tag">TypeScript</span><span class="rp-tag">Node.js</span><span class="rp-tag">Express</span><span class="rp-tag">Ollama</span><span class="rp-tag">Authentication</span></div></article>
+            <article class="rp-small"><div class="rp-status">Full-Stack · Data Visualization</div><h4 class="rp-small-title">AcademicPlanner</h4><p>A React, FastAPI, SQLite, and D3 academic-planning application. My contributions focused on application architecture, database schema design, testing, and coordinating the data model across the frontend and backend.</p><div class="rp-tags"><span class="rp-tag">React</span><span class="rp-tag">FastAPI</span><span class="rp-tag">SQLite</span><span class="rp-tag">D3</span><span class="rp-tag">REST APIs</span><span class="rp-tag">Testing</span></div></article>
+            <article class="rp-small"><div class="rp-status">HackUNCP · Incident Response</div><h4 class="rp-small-title">TriageTap</h4><p>An AI-assisted incident-response prototype built during HackUNCP with Java, Spring Boot, and MongoDB. The project explored how an application can organize early incident information and support faster triage decisions under hackathon time constraints.</p><div class="rp-tags"><span class="rp-tag">Java</span><span class="rp-tag">Spring Boot</span><span class="rp-tag">MongoDB</span><span class="rp-tag">Incident Response</span><span class="rp-tag">AI Workflows</span></div></article>
+            <article class="rp-small"><div class="rp-status">Kubernetes Security · Retrieval Research</div><h4 class="rp-small-title">KubeSecKB</h4><p>A Kubernetes security knowledge and retrieval project combining CIS guidance, Falco detections, and vulnerability information. The work focuses on corpus construction, ground-truth retrieval evaluation, and robustness against manipulated or poisoned security knowledge.</p><div class="rp-tags"><span class="rp-tag">Kubernetes Security</span><span class="rp-tag">CIS</span><span class="rp-tag">Falco</span><span class="rp-tag">CVEs</span><span class="rp-tag">RAG</span><span class="rp-tag">Retrieval Evaluation</span></div></article>
+          </div>
+        </div>`;
+
+      const ensureProjectsSection = () => {
+        if (!document.getElementById("projects")) {
+          const about = document.getElementById("about");
+          const education = document.getElementById("education");
+          if (!about || !education) return;
+          const section = document.createElement("section");
+          section.id = "projects";
+          section.className = "relative py-32 px-6";
+          section.innerHTML = sectionMarkup;
+          about.insertAdjacentElement("afterend", section);
+        }
+
+        document.querySelectorAll('a[href="#education"]').forEach((educationLink) => {
+          const parent = educationLink.parentElement;
+          if (!parent || parent.querySelector('a[href="#projects"]')) return;
+          const link = document.createElement("a");
+          link.href = "#projects";
+          link.textContent = "Projects";
+          link.className = educationLink.className;
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+          });
+          parent.insertBefore(link, educationLink);
+        });
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", ensureProjectsSection);
+      } else {
+        ensureProjectsSection();
+      }
+      const observer = new MutationObserver(ensureProjectsSection);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+      setTimeout(() => observer.disconnect(), 15000);
+    })();
+  </script>
   <script>
     (() => {
       const addPembrokeScholarsPhoto = () => {
