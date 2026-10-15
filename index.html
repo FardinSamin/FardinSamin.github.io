@@ -202,5 +202,39 @@
       setTimeout(() => observer.disconnect(), 10000);
     })();
   </script>
+
+  <script data-direction-heading-fix>
+    (() => {
+      const renameLegacyFeatured = () => {
+        const projects = document.getElementById("projects");
+        const headings = Array.from(document.querySelectorAll("h1,h2,h3"));
+        const legacyHeading = headings.find((el) => {
+          const text = (el.textContent || "").trim();
+          return text === "What I'm Building" && (!projects || !projects.contains(el));
+        });
+        if (!legacyHeading) return;
+
+        legacyHeading.textContent = "Where I'm Headed";
+
+        const container = legacyHeading.parentElement;
+        if (!container) return;
+        const labels = Array.from(container.querySelectorAll("p"));
+        const kicker = labels.find((el) =>
+          (el.textContent || "").trim().toLowerCase().includes("featured")
+        );
+        if (kicker) kicker.textContent = "// DIRECTION";
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", renameLegacyFeatured);
+      } else {
+        renameLegacyFeatured();
+      }
+
+      const observer = new MutationObserver(renameLegacyFeatured);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+      setTimeout(() => observer.disconnect(), 15000);
+    })();
+  </script>
 </body>
 </html>
