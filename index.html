@@ -300,5 +300,72 @@
       }
     })();
   </script>
+
+  <script data-safe-academic-copy>
+    (() => {
+      const applyAcademicCopy = () => {
+        if (document.documentElement.hasAttribute("data-academic-copy-applied")) return true;
+
+        const section = document.getElementById("education");
+        if (!section) return false;
+
+        const all = Array.from(section.querySelectorAll("h1,h2,h3,h4,p,span"));
+
+        const setExact = (oldText, newText) => {
+          const el = all.find((node) => (node.textContent || "").trim() === oldText);
+          if (el) el.textContent = newText;
+          return el;
+        };
+
+        setExact("Expected Graduation: Spring 2027", "Expected Graduation: May 2027");
+        setExact(
+          "Maynor Honors College · ACM President · Resident Advisor · Orientation Leader",
+          "Maynor Honors College · Chancellor’s List · ACM Student Chapter President · Lead Resident Advisor"
+        );
+        setExact(
+          "Cybersecurity, Cloud Security, Data Structures, Web Development, Software Engineering, Networking, and Java Programming",
+          "Data Structures · Software Development · Operating Systems · Network Architecture · Programming Languages · Cloud Security · Network Security · Advanced Software Project"
+        );
+        setExact(
+          "Focused on cybersecurity, secure systems, technical growth, and building a strong long-term foundation in computing.",
+          "I’m most interested in coursework that connects computer science theory with real systems—from software architecture and data structures to operating systems, networks, security, and intelligent systems."
+        );
+
+        const directionHeading = setExact("Current Direction", "Academic Priorities");
+        setExact(
+          "Combining academics, leadership, and practical project work while preparing for future opportunities in cybersecurity and advanced study.",
+          "I’m continuing to strengthen my foundations in systems, networking, software engineering, security, data, and applied AI while becoming better at technical problem-solving, experimentation, documentation, and communicating complex ideas clearly."
+        );
+
+        const graduationText = Array.from(section.querySelectorAll("span,p")).find((el) =>
+          (el.textContent || "").trim() === "Expected Graduation: May 2027"
+        );
+
+        if (graduationText && !section.querySelector("[data-education-gpa]")) {
+          const gpa = document.createElement("span");
+          gpa.setAttribute("data-education-gpa", "");
+          gpa.textContent = "GPA: 3.70 / 4.00";
+          gpa.style.cssText = "display:inline-block;margin-left:1rem;font-size:.875rem;font-weight:600;color:hsl(var(--foreground) / .8)";
+          graduationText.insertAdjacentElement("afterend", gpa);
+        }
+
+        if (!directionHeading) return false;
+
+        document.documentElement.setAttribute("data-academic-copy-applied", "");
+        return true;
+      };
+
+      const attempt = (remaining = 8) => {
+        if (applyAcademicCopy() || remaining <= 0) return;
+        setTimeout(() => attempt(remaining - 1), 250);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => attempt(), { once: true });
+      } else {
+        attempt();
+      }
+    })();
+  </script>
 </body>
 </html>
