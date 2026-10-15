@@ -30,8 +30,8 @@
     />
     <meta name="twitter:image" content="https://fardinsamin.github.io/assets/profile-photo-CGSDlmCd.jpg" />
 
-    <script type="module" crossorigin src="/assets/index-Dgzl0BhR.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-C1oXypmT.css" />
+    <script type="module" crossorigin src="/assets/index-Dgzl0BhR.js?v=32"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C1oXypmT.css?v=32" />
     <style id="research-projects-styles">
       #projects .rp-shell{max-width:72rem;margin:0 auto}
       #projects .rp-intro{max-width:48rem;margin-top:1.25rem;color:hsl(var(--muted-foreground));line-height:1.75}
@@ -67,6 +67,7 @@
   </head>
 
   <body>
+    <!-- recovery-cache-bust-v32 -->
     <div id="root"></div>
   
 
@@ -200,40 +201,6 @@
       const observer = new MutationObserver(addPembrokeScholarsPhoto);
       observer.observe(document.documentElement, { childList: true, subtree: true });
       setTimeout(() => observer.disconnect(), 10000);
-    })();
-  </script>
-
-  <script data-direction-heading-fix>
-    (() => {
-      const renameLegacyFeatured = () => {
-        const projects = document.getElementById("projects");
-        const headings = Array.from(document.querySelectorAll("h1,h2,h3"));
-        const legacyHeading = headings.find((el) => {
-          const text = (el.textContent || "").trim();
-          return text === "What I'm Building" && (!projects || !projects.contains(el));
-        });
-        if (!legacyHeading) return;
-
-        legacyHeading.textContent = "Where I'm Headed";
-
-        const container = legacyHeading.parentElement;
-        if (!container) return;
-        const labels = Array.from(container.querySelectorAll("p"));
-        const kicker = labels.find((el) =>
-          (el.textContent || "").trim().toLowerCase().includes("featured")
-        );
-        if (kicker) kicker.textContent = "// DIRECTION";
-      };
-
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", renameLegacyFeatured);
-      } else {
-        renameLegacyFeatured();
-      }
-
-      const observer = new MutationObserver(renameLegacyFeatured);
-      observer.observe(document.documentElement, { childList: true, subtree: true });
-      setTimeout(() => observer.disconnect(), 15000);
     })();
   </script>
 </body>
