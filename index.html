@@ -367,5 +367,91 @@
       }
     })();
   </script>
+
+  <script data-safe-milestones-copy>
+    (() => {
+      const applyMilestonesCopy = () => {
+        if (document.documentElement.hasAttribute("data-milestones-copy-applied")) return true;
+
+        const education = document.getElementById("education");
+        const achievements = document.getElementById("achievements");
+        if (!education || !achievements) return false;
+
+        const setExactWithin = (root, oldText, newText) => {
+          const nodes = Array.from(root.querySelectorAll("h1,h2,h3,h4,p,span"));
+          const el = nodes.find((node) => (node.textContent || "").trim() === oldText);
+          if (el) el.textContent = newText;
+          return el;
+        };
+
+        setExactWithin(education, "Honors & Leadership", "Honors & Recognition");
+
+        const educationNodes = Array.from(education.querySelectorAll("p,span"));
+        const honorsText = educationNodes.find((el) => {
+          const text = (el.textContent || "").trim();
+          return text.includes("Maynor Honors College") &&
+            (text.includes("ACM") || text.includes("Lead Resident Advisor"));
+        });
+        if (honorsText) {
+          honorsText.textContent = "Maynor Honors College · Chancellor’s List";
+        }
+
+        const updateMilestoneCard = (oldTitle, newTitle, newCopy) => {
+          const headings = Array.from(achievements.querySelectorAll("h2,h3,h4"));
+          const titleEl = headings.find((el) => (el.textContent || "").trim() === oldTitle);
+          if (!titleEl) return false;
+
+          titleEl.textContent = newTitle;
+          const card = titleEl.closest("div[class*='card'], article") || titleEl.parentElement?.parentElement?.parentElement;
+          if (!card) return true;
+
+          const body = Array.from(card.querySelectorAll("p")).find((el) => {
+            const text = (el.textContent || "").trim();
+            return text.length > 30 && !text.startsWith("//");
+          });
+          if (body) body.textContent = newCopy;
+          return true;
+        };
+
+        updateMilestoneCard(
+          "Leadership in Action",
+          "ACM Student Chapter President",
+          "Leading the ACM Student Chapter at UNC Pembroke, organizing technical engagement, student programming, and community-building initiatives."
+        );
+
+        updateMilestoneCard(
+          "Campus Leadership",
+          "Lead Resident Advisor",
+          "Promoted from Resident Advisor to Lead Resident Advisor, taking on broader peer leadership, resident support, and community responsibilities."
+        );
+
+        updateMilestoneCard(
+          "Technical Growth",
+          "DoIT Security Operations Center Intern",
+          "Completed a Summer 2025 Security Operations Center internship with UNC Pembroke DoIT, reviewing alerts, investigating suspicious endpoints, domains, and IP addresses, triaging security tickets, and escalating higher-risk cases."
+        );
+
+        updateMilestoneCard(
+          "Future Vision",
+          "Orientation Leader",
+          "Served as an Orientation Leader, helping incoming students navigate their transition to UNC Pembroke and connect with campus resources."
+        );
+
+        document.documentElement.setAttribute("data-milestones-copy-applied", "");
+        return true;
+      };
+
+      const attempt = (remaining = 10) => {
+        if (applyMilestonesCopy() || remaining <= 0) return;
+        setTimeout(() => attempt(remaining - 1), 250);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => attempt(), { once: true });
+      } else {
+        attempt();
+      }
+    })();
+  </script>
 </body>
 </html>
