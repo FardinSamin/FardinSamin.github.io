@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Downloading Resume</title>
+</head>
+<body>
+  <p>Preparing Fardin Samin's resume...</p>
+  <script>
+    (async () => {
+      try {
+        const parts = await Promise.all(
+          [0,1,2,3].map(i =>
+            fetch('/resume_parts/p' + i + '.txt?v=2', {cache:'no-store'}).then(r => {
+              if (!r.ok) throw new Error('Missing resume part ' + i);
+              return r.text();
+            })
+          )
+        );
+        const url = URL.createObjectURL(
+          new Blob([new TextEncoder().encode(parts.join(''))], {type:'application/pdf'})
+        );
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Fardin_Samin_Resume.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+          history.back();
+        }, 1000);
+      } catch (error) {
+        document.body.textContent = 'Resume download failed. Please try again.';
+        console.error(error);
+      }
+    })();
+  </script>
+</body>
+</html>
