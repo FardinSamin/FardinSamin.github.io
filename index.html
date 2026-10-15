@@ -560,5 +560,109 @@
       }
     })();
   </script>
+
+  <script data-safe-cta-copy>
+    (() => {
+      const applyCtaCopy = () => {
+        if (document.documentElement.hasAttribute("data-cta-copy-applied")) return true;
+
+        const all = Array.from(document.querySelectorAll("h1,h2,h3,h4,p,a,button"));
+
+        const heading = all.find((el) => {
+          const text = (el.textContent || "").trim();
+          return text === "Let’s Build Something Great" || text === "Let's Build Something Great";
+        });
+
+        if (!heading) return false;
+
+        const container =
+          heading.closest("section") ||
+          heading.closest("div[class*='glass']") ||
+          heading.parentElement?.parentElement;
+
+        if (!container) return false;
+
+        heading.textContent = "Have an Idea Worth Exploring?";
+
+        const labels = Array.from(container.querySelectorAll("p"));
+        const kicker = labels.find((el) => {
+          const text = (el.textContent || "").trim().toLowerCase();
+          return text.includes("next step");
+        });
+        if (kicker) kicker.textContent = "// WHAT'S NEXT";
+
+        const body = labels.find((el) => {
+          const text = (el.textContent || "").trim();
+          return text.startsWith("This is your final call-to-action area");
+        });
+        if (body) {
+          body.textContent =
+            "Whether it starts as a research question, a technical challenge, or an opportunity to collaborate, I’m always interested in conversations that could lead somewhere meaningful.";
+        }
+
+        const actions = Array.from(container.querySelectorAll("a,button"));
+
+        const configureAction = (oldText, newText, href, external = false) => {
+          const el = actions.find((node) => (node.textContent || "").trim() === oldText);
+          if (!el) return;
+
+          el.textContent = newText;
+
+          if (el.tagName === "A") {
+            el.setAttribute("href", href);
+            if (external) {
+              el.setAttribute("target", "_blank");
+              el.setAttribute("rel", "noreferrer");
+            } else {
+              el.removeAttribute("target");
+              el.removeAttribute("rel");
+            }
+          } else {
+            el.onclick = (event) => {
+              event.preventDefault();
+              if (external) {
+                window.open(href, "_blank", "noopener,noreferrer");
+              } else {
+                window.location.href = href;
+              }
+            };
+          }
+        };
+
+        configureAction(
+          "Explore More",
+          "Get in Touch",
+          "mailto:fes006@bravemail.uncp.edu",
+          false
+        );
+        configureAction(
+          "Projects",
+          "GitHub",
+          "https://github.com/FardinSamin",
+          true
+        );
+        configureAction(
+          "View Journey",
+          "LinkedIn",
+          "https://www.linkedin.com/in/fardin-samin",
+          true
+        );
+
+        document.documentElement.setAttribute("data-cta-copy-applied", "");
+        return true;
+      };
+
+      const attempt = (remaining = 10) => {
+        if (applyCtaCopy() || remaining <= 0) return;
+        setTimeout(() => attempt(remaining - 1), 250);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => attempt(), { once: true });
+      } else {
+        attempt();
+      }
+    })();
+  </script>
 </body>
 </html>
