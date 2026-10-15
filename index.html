@@ -453,5 +453,112 @@
       }
     })();
   </script>
+
+  <script data-safe-about-copy>
+    (() => {
+      const applyAboutCopy = () => {
+        if (document.documentElement.hasAttribute("data-about-copy-applied")) return true;
+
+        const section = document.getElementById("about");
+        if (!section) return false;
+
+        const all = Array.from(section.querySelectorAll("h1,h2,h3,h4,p,span"));
+
+        const setExact = (oldText, newText) => {
+          const el = all.find((node) => (node.textContent || "").trim() === oldText);
+          if (el) el.textContent = newText;
+          return el;
+        };
+
+        setExact(
+          "I’m Fardin E. Samin, a Computer Science student in the Cybersecurity track at the University of North Carolina at Pembroke. I’m passionate about cybersecurity, innovation, and building technology that solves real problems while creating meaningful impact.",
+          "I’m Fardin E. Samin, a Computer Science student at UNC Pembroke who enjoys building systems and understanding how they work end to end. My interests span software engineering, AI, cybersecurity, data, and applied research, and I’m especially drawn to problems that require both technical depth and practical judgment."
+        );
+
+        setExact(
+          "Beyond academics, I stay deeply involved in leadership, service, and hands-on projects that challenge me to grow. I care about discipline, purpose, and long-term progress, and I’m working toward a future where I can combine technical skill, leadership, and ambition to build something meaningful.",
+          "I’m naturally curious, persistent, and comfortable moving between technical work and people-focused responsibilities. I like taking ownership, bringing structure to messy problems, learning by doing, and leaving things better organized than I found them."
+        );
+
+        setExact("UNC Pembroke · Computer Science", "UNC Pembroke · Computer Science");
+        setExact("Open to opportunities", "Open to research & technical opportunities");
+
+        const cards = Array.from(section.querySelectorAll("div")).filter((el) => {
+          const text = (el.textContent || "").trim();
+          return text.includes("Development") ||
+                 text.includes("Leadership") ||
+                 text.includes("Problem Solving") ||
+                 text.includes("Growth");
+        });
+
+        const updateCard = (title, copy) => {
+          const titleEl = all.find((el) => (el.textContent || "").trim() === title);
+          if (!titleEl) return;
+          const card = titleEl.closest("div");
+          if (!card) return;
+          const body = Array.from(card.querySelectorAll("p")).find((el) => {
+            const text = (el.textContent || "").trim();
+            return text.length > 0 && text !== title;
+          });
+          if (body) body.textContent = copy;
+        };
+
+        updateCard(
+          "Development",
+          "Turning ideas into working systems across frontend, backend, data, and AI"
+        );
+        updateCard(
+          "Leadership",
+          "Taking ownership, supporting people, and helping teams move forward"
+        );
+        updateCard(
+          "Problem Solving",
+          "Breaking complex problems into practical, testable steps"
+        );
+        updateCard(
+          "Growth",
+          "Expanding my range through research, projects, and new technical challenges"
+        );
+
+        const locationLabel = all.find((el) => (el.textContent || "").trim() === "Location");
+        if (locationLabel?.parentElement) {
+          const val = Array.from(locationLabel.parentElement.querySelectorAll("p")).find(
+            (el) => (el.textContent || "").trim() !== "Location"
+          );
+          if (val) val.textContent = "Pembroke, North Carolina";
+        }
+
+        const educationLabel = all.find((el) => (el.textContent || "").trim() === "Education");
+        if (educationLabel?.parentElement) {
+          const val = Array.from(educationLabel.parentElement.querySelectorAll("p")).find(
+            (el) => (el.textContent || "").trim() !== "Education"
+          );
+          if (val) val.textContent = "UNC Pembroke · Computer Science";
+        }
+
+        const statusLabel = all.find((el) => (el.textContent || "").trim() === "Status");
+        if (statusLabel?.parentElement) {
+          const val = Array.from(statusLabel.parentElement.querySelectorAll("p")).find(
+            (el) => (el.textContent || "").trim() !== "Status"
+          );
+          if (val) val.textContent = "Open to research & technical opportunities";
+        }
+
+        document.documentElement.setAttribute("data-about-copy-applied", "");
+        return true;
+      };
+
+      const attempt = (remaining = 10) => {
+        if (applyAboutCopy() || remaining <= 0) return;
+        setTimeout(() => attempt(remaining - 1), 250);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => attempt(), { once: true });
+      } else {
+        attempt();
+      }
+    })();
+  </script>
 </body>
 </html>
