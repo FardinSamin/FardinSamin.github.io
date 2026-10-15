@@ -563,14 +563,15 @@
 
   <script data-safe-cta-copy>
     (() => {
-      const applyCtaCopy = () => {
-        if (document.documentElement.hasAttribute("data-cta-copy-applied")) return true;
+      const applyCta = () => {
+        if (document.documentElement.hasAttribute("data-cta-v2-applied")) return true;
 
-        const all = Array.from(document.querySelectorAll("h1,h2,h3,h4,p,a,button"));
-
-        const heading = all.find((el) => {
+        const headings = Array.from(document.querySelectorAll("h1,h2,h3,h4"));
+        const heading = headings.find((el) => {
           const text = (el.textContent || "").trim();
-          return text === "Let’s Build Something Great" || text === "Let's Build Something Great";
+          return text === "Let’s Build Something Great" ||
+                 text === "Let's Build Something Great" ||
+                 text === "Have an Idea Worth Exploring?";
         });
 
         if (!heading) return false;
@@ -584,76 +585,88 @@
 
         heading.textContent = "Have an Idea Worth Exploring?";
 
-        const labels = Array.from(container.querySelectorAll("p"));
-        const kicker = labels.find((el) => {
+        const paragraphs = Array.from(container.querySelectorAll("p"));
+        const kicker = paragraphs.find((el) => {
           const text = (el.textContent || "").trim().toLowerCase();
-          return text.includes("next step");
+          return text.includes("next step") || text.includes("what's next");
         });
         if (kicker) kicker.textContent = "// WHAT'S NEXT";
 
-        const body = labels.find((el) => {
+        let body = paragraphs.find((el) => {
           const text = (el.textContent || "").trim();
-          return text.startsWith("This is your final call-to-action area");
+          return text.startsWith("This is your final call-to-action area") ||
+                 text.startsWith("Whether it starts as a research question");
         });
+
         if (body) {
           body.textContent =
             "Whether it starts as a research question, a technical challenge, or an opportunity to collaborate, I’m always interested in conversations that could lead somewhere meaningful.";
         }
 
-        const actions = Array.from(container.querySelectorAll("a,button"));
+        const oldLabels = new Set([
+          "Explore More",
+          "Projects",
+          "View Journey",
+          "Get in Touch",
+          "GitHub",
+          "LinkedIn"
+        ]);
 
-        const configureAction = (oldText, newText, href, external = false) => {
-          const el = actions.find((node) => (node.textContent || "").trim() === oldText);
-          if (!el) return;
+        const oldActions = Array.from(container.querySelectorAll("a,button"))
+          .filter((el) => oldLabels.has((el.textContent || "").trim()));
 
-          el.textContent = newText;
+        const oldParents = new Set(oldActions.map((el) => el.parentElement).filter(Boolean));
+        oldActions.forEach((el) => el.remove());
 
-          if (el.tagName === "A") {
-            el.setAttribute("href", href);
-            if (external) {
-              el.setAttribute("target", "_blank");
-              el.setAttribute("rel", "noreferrer");
-            } else {
-              el.removeAttribute("target");
-              el.removeAttribute("rel");
-            }
-          } else {
-            el.onclick = (event) => {
-              event.preventDefault();
-              if (external) {
-                window.open(href, "_blank", "noopener,noreferrer");
-              } else {
-                window.location.href = href;
-              }
-            };
+        oldParents.forEach((parent) => {
+          if (parent && parent.children.length === 0) parent.remove();
+        });
+
+        const existingRow = container.querySelector("[data-cta-actions]");
+        if (existingRow) existingRow.remove();
+
+        const row = document.createElement("div");
+        row.setAttribute("data-cta-actions", "");
+        row.style.cssText =
+          "margin-top:2rem;display:flex;flex-wrap:wrap;justify-content:center;gap:1rem";
+
+        const makeLink = (label, href, primary = false) => {
+          const link = document.createElement("a");
+          link.textContent = label;
+          link.href = href;
+          link.style.cssText = primary
+            ? "display:inline-flex;align-items:center;justify-content:center;min-width:140px;padding:.8rem 1.4rem;border-radius:.65rem;background:hsl(var(--primary));color:hsl(var(--primary-foreground));font-weight:700;text-decoration:none"
+            : "display:inline-flex;align-items:center;justify-content:center;min-width:140px;padding:.8rem 1.4rem;border-radius:.65rem;border:1px solid hsl(var(--primary) / .45);color:hsl(var(--primary));font-weight:700;text-decoration:none;background:hsl(var(--background) / .35)";
+          if (href.startsWith("http")) {
+            link.target = "_blank";
+            link.rel = "noreferrer";
           }
+          return link;
         };
 
-        configureAction(
-          "Explore More",
-          "Get in Touch",
-          "mailto:fes006@bravemail.uncp.edu",
-          false
+        row.appendChild(
+          makeLink("Get in Touch", "mailto:fes006@bravemail.uncp.edu", true)
         );
-        configureAction(
-          "Projects",
-          "GitHub",
-          "https://github.com/FardinSamin",
-          true
+        row.appendChild(
+          makeLink("GitHub", "https://github.com/FardinSamin")
         );
-        configureAction(
-          "View Journey",
-          "LinkedIn",
-          "https://www.linkedin.com/in/fardin-samin",
-          true
+        row.appendChild(
+          makeLink("LinkedIn", "https://www.linkedin.com/in/fardin-samin")
         );
 
-        document.documentElement.setAttribute("data-cta-copy-applied", "");
+        const bodyParent = body?.parentElement;
+        if (bodyParent) {
+          body.insertAdjacentElement("afterend", row);
+        } else {
+          container.appendChild(row);
+        }
+
+        document.documentElement.setAttribute("data-cta-v2-applied", "");
         return true;
       };
 
-      const attempt = (remaining = 10) => {
-        if (applyCtaCopy() || remaining <= 0) return;
+      const attempt = (remaining = 12) => {
+        if (applyCta() || remaining <= 0) return;
         setTimeout(() => attempt(remaining - 1), 250);
       };
 
