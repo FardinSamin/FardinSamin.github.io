@@ -677,5 +677,20 @@
       }
     })();
   </script>
+
+  <script data-resume-link-fix>
+    document.addEventListener("click", (event) => {
+      const target =
+        event.target instanceof Element ? event.target.closest("button,a") : null;
+      if (!target) return;
+
+      const label = (target.textContent || "").trim();
+      if (label !== "Resume" && label !== "Download Resume") return;
+
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.href = "/resume-download.html";
+    }, true);
+  </script>
 </body>
 </html>
