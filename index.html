@@ -203,5 +203,98 @@
       setTimeout(() => observer.disconnect(), 10000);
     })();
   </script>
+
+  <script data-safe-direction-copy>
+    (() => {
+      const applyDirectionCopy = () => {
+        if (document.documentElement.hasAttribute("data-direction-copy-applied")) return true;
+
+        const projects = document.getElementById("projects");
+        const headings = Array.from(document.querySelectorAll("h1,h2,h3,h4"));
+
+        const directionHeading = headings.find((el) => {
+          const text = (el.textContent || "").trim();
+          return text === "What I'm Building" && (!projects || !projects.contains(el));
+        });
+
+        if (!directionHeading) return false;
+
+        directionHeading.textContent = "Where I'm Headed";
+
+        const headingContainer = directionHeading.parentElement;
+        if (headingContainer) {
+          const kicker = Array.from(headingContainer.querySelectorAll("p")).find((el) =>
+            (el.textContent || "").trim().toLowerCase().includes("featured")
+          );
+          if (kicker) kicker.textContent = "// DIRECTION";
+        }
+
+        const section =
+          directionHeading.closest("section") ||
+          directionHeading.parentElement?.parentElement?.parentElement;
+
+        if (!section) return false;
+
+        const elements = Array.from(section.querySelectorAll("h2,h3,h4,p"));
+
+        const mainHeading = elements.find((el) =>
+          (el.textContent || "").trim().startsWith("A builder at the intersection")
+        );
+        if (mainHeading) {
+          mainHeading.textContent =
+            "Building across research, intelligent systems, and real-world software";
+        }
+
+        const mainBody = elements.find((el) => {
+          const text = (el.textContent || "").trim();
+          return text.startsWith("I’m building a path") || text.startsWith("I'm building a path");
+        });
+        if (mainBody) {
+          mainBody.textContent =
+            "I like working on problems that sit between research and engineering—where an idea has to become something that can actually be designed, built, tested, and evaluated. My work spans cybersecurity, trustworthy AI, knowledge graphs, computer vision, and full-stack software systems. Some projects begin with a research question; others begin with a practical problem. What interests me most is understanding how the pieces fit together and building systems that are useful, explainable, and technically sound.";
+        }
+
+        const updateCard = (title, copy) => {
+          const titleEl = elements.find(
+            (el) => (el.textContent || "").trim() === title
+          );
+          if (!titleEl) return;
+          const card = titleEl.parentElement;
+          if (!card) return;
+          const body = Array.from(card.querySelectorAll("p")).find(
+            (el) => (el.textContent || "").trim().length > 0
+          );
+          if (body) body.textContent = copy;
+        };
+
+        updateCard(
+          "Current Focus",
+          "Right now, I’m balancing research with hands-on software development. I’m developing ThreatRAGraph around GraphRAG and evidence-backed knowledge graphs, working on UniParkingBuddy across computer vision and full-stack engineering, and continuing to explore local AI, retrieval, secure software design, and applied machine learning."
+        );
+
+        updateCard(
+          "What Sets Me Apart",
+          "I enjoy moving between different layers of a problem. I can start with a research question, think through how it should be measured, design the system behind it, and then work through the implementation details needed to make it real. I care about whether something works, but also how we know it works, what assumptions it depends on, and where it might fail."
+        );
+
+        document.documentElement.setAttribute("data-direction-copy-applied", "");
+        return true;
+      };
+
+      const attempt = () => {
+        if (applyDirectionCopy()) return;
+        setTimeout(() => {
+          if (applyDirectionCopy()) return;
+          setTimeout(applyDirectionCopy, 750);
+        }, 200);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", attempt, { once: true });
+      } else {
+        attempt();
+      }
+    })();
+  </script>
 </body>
 </html>
