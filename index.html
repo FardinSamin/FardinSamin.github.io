@@ -790,5 +790,73 @@
       }
     })();
   </script>
+  <script data-footer-personalization-v1>
+    (() => {
+      const apply = () => {
+        if (document.documentElement.hasAttribute("data-footer-personalized")) return true;
+        const footer = Array.from(document.querySelectorAll("footer"))
+          .find((node) => (node.textContent || "").includes("Fardin E. Samin"));
+        if (!footer) return false;
+
+        const paragraphs = Array.from(footer.querySelectorAll("p"));
+        const credential = paragraphs.find((node) =>
+          (node.textContent || "").includes("Cybersecurity Track")
+        );
+        const copyright = paragraphs.find((node) => {
+          const value = (node.textContent || "").trim();
+          return value.includes("Built with passion") || value.startsWith("©");
+        });
+        if (!credential || !copyright) return false;
+
+        credential.textContent = "Computer Science · Cybersecurity Track · UNC Pembroke";
+        credential.style.textAlign = "center";
+
+        const badgeLabels = new Set(["Portfolio", "Creative", "Personal Brand"]);
+        const badges = Array.from(footer.querySelectorAll("*")).filter((node) => {
+          const label = (node.textContent || "").trim();
+          return badgeLabels.has(label) &&
+            !Array.from(node.children).some((child) => (child.textContent || "").trim() === label);
+        });
+        const ancestors = new Set();
+        badges.forEach((node) => {
+          const parent = node.parentElement;
+          if (parent) ancestors.add(parent);
+          node.remove();
+        });
+        ancestors.forEach((parent) => {
+          if (parent !== footer && parent.children.length === 0 && !(parent.textContent || "").trim()) {
+            parent.remove();
+          }
+        });
+
+        const tagline = document.createElement("p");
+        tagline.textContent = "There's always something else I want to understand.";
+        tagline.style.cssText =
+          "text-align:center;color:hsl(var(--foreground));font-size:clamp(1.075rem,2vw,1.25rem);font-weight:500;line-height:1.55;margin:1.65rem auto 0";
+        credential.insertAdjacentElement("afterend", tagline);
+
+        const divider = document.createElement("div");
+        divider.setAttribute("aria-hidden", "true");
+        divider.style.cssText =
+          "height:1px;max-width:540px;margin:1.5rem auto .75rem;background:linear-gradient(90deg,transparent,hsl(var(--primary) / .42),transparent)";
+        tagline.insertAdjacentElement("afterend", divider);
+
+        copyright.textContent = "© 2026 Fardin E. Samin · Probably caffeinated ☕";
+        copyright.style.textAlign = "center";
+
+        document.documentElement.setAttribute("data-footer-personalized", "");
+        return true;
+      };
+      const attempt = (remaining = 12) => {
+        if (apply() || remaining <= 0) return;
+        setTimeout(() => attempt(remaining - 1), 250);
+      };
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => attempt(), { once: true });
+      } else {
+        attempt();
+      }
+    })();
+  </script>
 </body>
 </html>
