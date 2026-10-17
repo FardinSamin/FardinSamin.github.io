@@ -698,5 +698,97 @@
       link.remove();
     }, true);
   </script>
+  <style data-hero-introduction-style>
+    .fs-hero-hook {
+      color: hsl(var(--foreground));
+      font-family: inherit;
+      font-size: clamp(1.5rem, 2.8vw, 2rem);
+      line-height: 1.32;
+      font-weight: 650;
+      max-width: 48rem;
+      margin: 0 auto 1rem;
+    }
+    .fs-hero-hook-accent { color: hsl(var(--primary)); }
+    .fs-hero-philosophy {
+      color: hsl(var(--foreground));
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      line-height: 1.45;
+      font-weight: 500;
+      margin: 0 auto 1.15rem;
+    }
+    .fs-hero-description {
+      color: hsl(var(--muted-foreground));
+      font-size: clamp(1rem, 1.65vw, 1.125rem);
+      line-height: 1.55;
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+  </style>
+  <script data-hero-introduction-v1>
+    (() => {
+      const apply = () => {
+        if (document.documentElement.hasAttribute("data-hero-introduction-applied")) return true;
+
+        const heading = Array.from(document.querySelectorAll("h1"))
+          .find((el) => (el.textContent || "").includes("Fardin E. Samin"));
+        if (!heading) return false;
+
+        const spans = Array.from(heading.querySelectorAll("span"));
+        const subtitle = spans.find((el) => {
+          const value = (el.textContent || "").trim();
+          return value.includes("Cybersecurity Track") ||
+                 value === "CS Track Cybersecurity Student" ||
+                 value === "Computer Science · Research · Engineering";
+        });
+        const descriptionArea = heading.nextElementSibling;
+        const oldDescription = descriptionArea?.querySelector("p");
+
+        if (!subtitle || !descriptionArea || !oldDescription) return false;
+        if (!descriptionArea.closest("section") || heading.closest("section") !== descriptionArea.closest("section")) return false;
+
+        subtitle.textContent = "Computer Science · Research · Engineering";
+        subtitle.style.fontSize = "clamp(1.25rem, 2.3vw, 1.5rem)";
+        subtitle.style.fontWeight = "500";
+        subtitle.style.lineHeight = "1.55";
+        subtitle.style.color = "hsl(var(--foreground))";
+        heading.style.marginBottom = "1.65rem";
+
+        oldDescription.style.display = "none";
+        descriptionArea.style.maxWidth = "52rem";
+        descriptionArea.style.marginBottom = "2rem";
+
+        const hook = document.createElement("h2");
+        hook.className = "fs-hero-hook";
+        hook.appendChild(document.createTextNode("Most of my projects started with a "));
+        const accent = document.createElement("span");
+        accent.className = "fs-hero-hook-accent";
+        accent.textContent = "question I couldn't leave alone.";
+        hook.appendChild(accent);
+
+        const philosophy = document.createElement("p");
+        philosophy.className = "fs-hero-philosophy";
+        philosophy.textContent = "I'm more interested in the problem than the label.";
+
+        const description = document.createElement("p");
+        description.className = "fs-hero-description";
+        description.textContent = "Sometimes that curiosity leads to research. Sometimes it leads to building something from scratch. I enjoy both—the investigation, the experimentation, and figuring out what actually works.";
+
+        descriptionArea.append(hook, philosophy, description);
+        document.documentElement.setAttribute("data-hero-introduction-applied", "");
+        return true;
+      };
+
+      const attempt = (remaining = 14) => {
+        if (apply() || remaining <= 0) return;
+        setTimeout(() => attempt(remaining - 1), 250);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => attempt(), { once: true });
+      } else {
+        attempt();
+      }
+    })();
+  </script>
 </body>
 </html>
