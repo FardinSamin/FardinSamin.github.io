@@ -858,5 +858,36 @@
       }
     })();
   </script>
+  <script data-unified-chat-links-v1>
+    (() => {
+      const findChatToggle = () =>
+        document.querySelector("button[data-portfolio-chat-toggle]") ||
+        document.querySelector("button.fixed.bottom-6.right-6") ||
+        document.querySelector('button[class*="fixed"][class*="bottom-6"][class*="right-6"]');
+
+      document.addEventListener("click", (event) => {
+        const link = event.target instanceof Element
+          ? event.target.closest('a[href="#chat"]')
+          : null;
+        if (!link) return;
+
+        const text = (link.textContent || "").trim();
+        if (text !== "Chat" && text !== "Ask Me Anything") return;
+
+        const chatInput = document.querySelector('input[placeholder="Type your question..."]');
+        if (chatInput) {
+          event.preventDefault();
+          chatInput.focus();
+          return;
+        }
+
+        const toggle = findChatToggle();
+        if (!toggle) return;
+
+        event.preventDefault();
+        toggle.click();
+      }, true);
+    })();
+  </script>
 </body>
 </html>
