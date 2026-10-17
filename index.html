@@ -689,7 +689,13 @@
 
       event.preventDefault();
       event.stopImmediatePropagation();
-      window.location.href = "/resume-download.html";
+
+      const link = document.createElement("a");
+      link.href = "/resume.pdf";
+      link.download = "Fardin_Samin_Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     }, true);
   </script>
 </body>
